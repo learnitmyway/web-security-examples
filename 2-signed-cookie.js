@@ -1,25 +1,21 @@
 const express = require('express')
+const { createReadStream } = require('fs')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const crypto = require('crypto')
-const { createReadStream } = require('fs')
 
 const port = 3000
 const users = {
-  bo: 'pass2',
+  bo: 'pass',
   yu: '123'
 }
-
-const sessions = {}
-const cookieName = 'sessionId'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser('secret that is really hard to guess'))
 
 app.get('/', (req, res) => {
-  if (req.signedCookies.sessionId) {
-    res.send('Hello ' + sessions[req.signedCookies.sessionId])
+  if (req.signedCookies.username) {
+    res.send('Hello ' + req.signedCookies.username)
   } else {
     createReadStream('login.html').pipe(res)
   }
@@ -28,9 +24,7 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const password = users[req.body.username]
   if (password === req.body.password) {
-    const sessionId = crypto.randomBytes(16).toString('base64')
-    res.cookie(cookieName, sessionId, { signed: true })
-    sessions[sessionId] = req.body.username
+    res.cookie('username', req.body.username, { signed: true })
     res.redirect('/')
   }
 })
@@ -38,7 +32,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   const password = users[req.body.username]
   if (password === req.body.password) {
-    res.clearCookie(cookieName)
+    res.clearCookie('username')
     res.redirect('/')
   }
 })
