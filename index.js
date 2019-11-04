@@ -29,4 +29,12 @@ app.post('/login', (req, res) => {
   }
 })
 
+app.get('/logout', (req, res) => {
+  const password = users[req.body.username]
+  if (password === req.body.password) {
+    res.clearCookie('username')
+    res.redirect('/')
+  }
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
