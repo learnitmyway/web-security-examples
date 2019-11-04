@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
   if (req.cookies.username) {
     res.send('Hello ' + req.cookies.username)
   } else {
-    createReadStream('index.html').pipe(res)
+    createReadStream('login.html').pipe(res)
   }
 })
 
