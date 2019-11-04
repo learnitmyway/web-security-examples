@@ -32,15 +32,14 @@ app.post('/login', (req, res) => {
     res.cookie(cookieName, sessionId, { signed: true })
     sessions[sessionId] = req.body.username
     res.redirect('/')
+  } else {
+    res.send('fail!')
   }
 })
 
 app.get('/logout', (req, res) => {
-  const password = users[req.body.username]
-  if (password === req.body.password) {
-    res.clearCookie(cookieName)
-    res.redirect('/')
-  }
+  res.clearCookie(cookieName)
+  res.redirect('/')
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
