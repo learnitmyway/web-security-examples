@@ -11,11 +11,11 @@ const users = {
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cookieParser('secret that is really hard to guess'))
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
-  if (req.signedCookies.username) {
-    res.send('Hello ' + req.signedCookies.username)
+  if (req.cookies.username) {
+    res.send('Hello ' + req.cookies.username)
   } else {
     createReadStream('login.html').pipe(res)
   }
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const password = users[req.body.username]
   if (password === req.body.password) {
-    res.cookie('username', req.body.username, { signed: true })
+    res.cookie('username', req.body.username)
     res.redirect('/')
   }
 })
