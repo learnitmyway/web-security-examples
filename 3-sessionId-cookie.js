@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const password = users[req.body.username]
   if (password === req.body.password) {
-    const sessionId = crypto.randomBytes(16).toString('base64')
+    const sessionId = crypto.randomBytes(16).toString('hex')
     res.cookie(cookieName, sessionId, { signed: true })
     sessions[sessionId] = req.body.username
     res.redirect('/')
