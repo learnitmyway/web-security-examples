@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 const crypto = require('crypto')
 const { createReadStream } = require('fs')
 
-const port = 3006
+const port = 3005
 const users = {
   bo: 'pass2',
   yu: '123',
@@ -19,12 +19,6 @@ const balances = {
 
 const sessions = {}
 const cookieName = 'sessionId'
-const cookieOptions = {
-  signed: true,
-  httpOnly: true,
-  // secure: true, // not possible with localhost
-  sameSite: 'lax' // locally: add trick.com to /etc/hosts and go to http://trick.com:5006/
-}
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -60,8 +54,10 @@ app.post('/login', (req, res) => {
   const password = users[req.body.username]
   if (password === req.body.password) {
     const sessionId = crypto.randomBytes(16).toString('hex')
-    const thirtyDays = 30 * 24 * 60 * 60 * 1000
-    res.cookie(cookieName, sessionId, { ...cookieOptions, maxAge: thirtyDays })
+    res.cookie(cookieName, sessionId, {
+      signed: true,
+      httpOnly: true
+    })
     sessions[sessionId] = req.body.username
     res.redirect('/')
   } else {
@@ -88,7 +84,7 @@ app.post('/transfer', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-  res.clearCookie(cookieName, cookieOptions)
+  res.clearCookie(cookieName)
   res.redirect('/')
 })
 
