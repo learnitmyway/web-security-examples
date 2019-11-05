@@ -4,15 +4,17 @@ const cookieParser = require('cookie-parser')
 const crypto = require('crypto')
 const { createReadStream } = require('fs')
 
-const port = 3000
+const port = 3005
 const users = {
   bo: 'pass2',
-  yu: '123'
+  yu: '123',
+  att: 'abc'
 }
 
 const balances = {
   bo: 500,
-  yu: 1000
+  yu: 1000,
+  att: 0
 }
 
 const sessions = {}
@@ -27,6 +29,7 @@ app.get('/', (req, res) => {
     const username = sessions[req.signedCookies.sessionId]
     const balance = balances[username]
     const html = `
+      <p>Hi ${username}</p>
       <p>Your balance is $${balance}</p>
       <form action="/transfer" method="post">
         <label>
@@ -64,7 +67,7 @@ app.post('/login', (req, res) => {
 
 app.post('/transfer', (req, res) => {
   const to = req.body.to
-  if (req.signedCookies.sessionId && balances[to]) {
+  if (req.signedCookies.sessionId && balances.hasOwnProperty(to)) {
     const from = sessions[req.signedCookies.sessionId]
     const amount = Number(req.body.amount)
     balances[from] -= amount
