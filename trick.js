@@ -5,6 +5,10 @@ const port = 5000
 const app = express()
 
 app.get('/', (req, res) => {
+  createReadStream('trick.html').pipe(res)
+})
+
+app.get('/attack', (req, res) => {
   createReadStream('attack.html').pipe(res)
 })
 
