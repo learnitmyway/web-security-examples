@@ -39,6 +39,7 @@ app.get('/', (req, res) => {
         </label>
         <button type="submit">Transfer</button>
       </form>
+      <a href="/logout">Logout</a>
     `
     res.send(html)
   } else {
