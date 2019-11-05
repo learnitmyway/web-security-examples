@@ -67,9 +67,14 @@ app.post('/login', (req, res) => {
 
 app.post('/transfer', (req, res) => {
   const to = req.body.to
-  if (req.signedCookies.sessionId && balances.hasOwnProperty(to)) {
-    const from = sessions[req.signedCookies.sessionId]
-    const amount = Number(req.body.amount)
+  const amount = Number(req.body.amount)
+  const sessionId = req.signedCookies.sessionId
+  const from = sessions[sessionId]
+  if (
+    amount > 0 &&
+    balances.hasOwnProperty(from) &&
+    balances.hasOwnProperty(to)
+  ) {
     balances[from] -= amount
     balances[to] += amount
     res.redirect('/')
