@@ -1,10 +1,7 @@
 {
   "name": "session-attacks",
   "private": true,
-  "scripts": {
-    "start": "nodemon index.js",
-    "trick": "nodemon trick.js"
-  },
+  "scripts": {},
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1"
