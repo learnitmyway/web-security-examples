@@ -1,1 +1,51 @@
 # Web security examples
+
+## Run locally
+
+- `npm install`
+- `npx nodemon index.js`
+
+## Exercises
+
+### 1
+
+- `npx nodemon 1-unsigned-cookie.js`
+- Change value of `username` cookie
+
+This can be mitigated by signing the cookie (see `2-signed-cookie.js`)
+
+### 2
+
+- `npx nodemon 2-signed-cookie.js`
+
+Changing the password has no effect on a compromised cookie.
+For this reason it is better to use a (long) session id (see `3-sessionId-cookie.js`)
+
+### 3
+
+- `npx nodemon 3-sessionId-cookie.js`
+
+The cookie can be accessed via js. For example: `document.cookie` lists cookies.
+Setting `httpOnly: true` prevents this (see `4-httpOnly-cookie.js`)
+
+### 4
+
+- `npx nodemon 4-httpOnly-cookie.js`
+
+There is no vulnerability to demonstrate here.
+
+### 5
+
+- Start `npx nodemon 5-csrf-vulnerable.js` and go to <http://localhost:3005/>
+- Start `npx nodemon 5-csrf-trick.js` and go to <http://localhost:3005/>
+
+In `5-csrf-trick` an iframe is used to transfer money to user 'att'.
+
+This is mitigated by setting the SameSite attribute:
+
+- Add to `/etc/hosts`: `127.0.0.1 trick.com`
+- Start `npx nodemon 5s.js` and go to <http://localhost:3005/>
+- Start `npx nodemon 5s-trick.js` and go to <http://trick.com:5005/>
+
+Now the cookie now has a SameSite attribute set to 'lax'.
+If it were set to 'strict' I believe it would strip the cookie even if you already had the same origin open in another tab (eg. redirecting to FB when you are already logged in)
