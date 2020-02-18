@@ -3,7 +3,6 @@
 ## Run locally
 
 - `npm install`
-- `npx nodemon index.js`
 
 ## Exercises
 
@@ -49,3 +48,10 @@ This is mitigated by setting the SameSite attribute:
 
 Now the cookie now has a SameSite attribute set to 'lax'.
 If it were set to 'strict' I believe it would strip the cookie even if you already had the same origin open in another tab (eg. redirecting to FB when you are already logged in)
+
+### 6
+
+Adds the secure attribute to the `sessionId` cookie.
+
+- The self-signed cert was generated using `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -new -sha256 -keyout certs/key.pem -out certs/cert.pem`
+- Start `npx nodemon 6.js` and go to <https://localhost> (does not work in Chrome)
