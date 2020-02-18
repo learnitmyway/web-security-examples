@@ -1,10 +1,11 @@
 const express = require('express')
+const http = require('http')
+const https = require('https')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const crypto = require('crypto')
-const { createReadStream } = require('fs')
+const { createReadStream, readFileSync } = require('fs')
 
-const port = 3006
 const users = {
   bo: 'pass2',
   yu: '123',
@@ -22,8 +23,8 @@ const cookieName = 'sessionId'
 const cookieOptions = {
   signed: true,
   httpOnly: true,
-  // secure: true, // not possible with localhost
-  sameSite: 'lax' // locally: add trick.com to /etc/hosts and go to http://trick.com:5006/
+  secure: true,
+  sameSite: 'lax'
 }
 
 const app = express()
@@ -92,4 +93,19 @@ app.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+const httpServer = http.createServer(app)
+
+const port = 3006
+httpServer.listen(port, () => console.log(`http is listening on port ${port}!`))
+
+const options = {
+  key: readFileSync('certs/key.pem'),
+  cert: readFileSync('certs/cert.pem')
+}
+
+const httpsServer = https.createServer(options, app)
+
+const httpsPort = 443
+httpsServer.listen(httpsPort, () =>
+  console.log(`https is listening on port ${httpsPort}!`)
+)
