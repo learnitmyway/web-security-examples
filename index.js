@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 const crypto = require('crypto')
 const { createReadStream } = require('fs')
 
-const port = 3006
+const port = 3007
 const users = {
   bo: 'pass2',
   yu: '123',
@@ -53,6 +53,13 @@ app.get('/', (req, res) => {
   } else {
     createReadStream('login.html').pipe(res)
   }
+})
+
+app.get('/query', (req, res) => {
+  const html = `
+      <p>Your query: ${req.query.q}</p>
+    `
+  res.send(html)
 })
 
 app.post('/login', (req, res) => {
