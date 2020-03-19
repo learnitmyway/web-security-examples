@@ -60,3 +60,11 @@ Adds the secure attribute to the `sessionId` cookie.
 - Start `npx nodemon 6.js` and go to <https://localhost> (does not work in Chrome)
 
 This is reverted in `6-revert.js` to make it easier to use on localhost.
+
+### 7
+
+Example of reflected XSS
+
+- Start `npx nodemon 7.js`
+- go to <http://localhost:3007/query?q=asfadf>
+- Trigger the XSS with <http://localhost:3007/query?q=<script>alert('Oops')</script>>
