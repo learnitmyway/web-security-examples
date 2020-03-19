@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const crypto = require('crypto')
 const { createReadStream } = require('fs')
+const escapeHtml = require('escape-html')
 
 const port = 3007
 const users = {
@@ -57,7 +58,7 @@ app.get('/', (req, res) => {
 
 app.get('/query', (req, res) => {
   const html = `
-      <p>Your query: ${req.query.q}</p>
+      <p>Your query: ${escapeHtml(req.query.q)}</p>
     `
   res.send(html)
 })
