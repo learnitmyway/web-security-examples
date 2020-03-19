@@ -23,7 +23,7 @@ const cookieName = 'sessionId'
 const cookieOptions = {
   signed: true,
   httpOnly: true,
-  secure: true,
+  secure: false,
   sameSite: 'lax'
 }
 
