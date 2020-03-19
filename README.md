@@ -40,7 +40,7 @@ There is no vulnerability to demonstrate here.
 
 In `5-csrf-trick` an iframe is used to transfer money to user 'att'.
 
-This is mitigated by setting the SameSite attribute:
+This is mitigated by setting the SameSite attribute (see `5s.js`):
 
 - Add to `/etc/hosts`: `127.0.0.1 trick.com`
 - Start `npx nodemon 5s.js` and go to <http://localhost:3005/>
