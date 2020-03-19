@@ -6,6 +6,9 @@
 
 ## Exercises
 
+- User details are in plaintext
+- If the user is undefined delete the session cookie manually
+
 ### 1
 
 - `npx nodemon 1-unsigned-cookie.js`
@@ -55,3 +58,5 @@ Adds the secure attribute to the `sessionId` cookie.
 
 - The self-signed cert was generated using `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -new -sha256 -keyout certs/key.pem -out certs/cert.pem`
 - Start `npx nodemon 6.js` and go to <https://localhost> (does not work in Chrome)
+
+This is reverted in `6-revert.js` to make it easier to use on localhost.
