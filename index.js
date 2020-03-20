@@ -5,7 +5,7 @@ const crypto = require('crypto')
 const { createReadStream } = require('fs')
 const escapeHtml = require('escape-html')
 
-const port = 3007
+const port = 3008
 const users = {
   bo: 'pass2',
   yu: '123',
@@ -29,6 +29,15 @@ const cookieOptions = {
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser('secret that is really hard to guess'))
+
+app.use(function(req, res, next) {
+  const nonce = crypto.randomBytes(16).toString('hex')
+  res.setHeader(
+    'Content-Security-Policy',
+    `script-src 'unsafe-inline' https: 'nonce-${nonce}' 'strict-dynamic'`
+  )
+  return next()
+})
 
 app.get('/', (req, res) => {
   if (req.signedCookies.sessionId) {
