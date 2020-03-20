@@ -63,8 +63,10 @@ This is reverted in `6-revert.js` to make it easier to use on localhost.
 
 ### 7
 
-Example of reflected XSS
+Example of reflected XSS.
 
 - Start `npx nodemon 7.js`
 - go to <http://localhost:3007/query?q=asfadf>
 - Trigger the XSS with <http://localhost:3007/query?q=<script>alert('Oops')</script>>
+
+This is prevented by escaping the query (see `7s.js`)
