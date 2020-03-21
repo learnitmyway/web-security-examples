@@ -70,10 +70,3 @@ Example of reflected XSS.
 - Trigger the XSS with <http://localhost:3007/query?q=<script>alert('Oops')</script>>
 
 This is prevented by escaping the query (see `7s.js`)
-
-### 8
-
-Adds a `script-src` CSP header that (if I understand it correctly):
-
-- only allows scripts that were in the code in the first place with `https: 'nonce-${nonce}' 'strict-dynamic'`. The nonce is regenerated every time the page loads.
-- has backwards compatibility to only allow inline scripts with `unsafe-inline`
