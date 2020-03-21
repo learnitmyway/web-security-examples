@@ -69,4 +69,7 @@ Example of reflected XSS.
 - go to <http://localhost:3007/query?q=asfadf>
 - Trigger the XSS with <http://localhost:3007/query?q=<script>alert('Oops')</script>>
 
-This is prevented by escaping the query (see `7s.js`)
+Preventions:
+
+- Escape the query (see `7s.js`)
+- Add a csp header (see `7s2.js`)
