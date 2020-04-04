@@ -1,5 +1,7 @@
 # Web security examples
 
+Inspired by <https://web.stanford.edu/class/cs253/>
+
 ## Run locally
 
 - `npm install`
